@@ -4,7 +4,7 @@
 
 <section class="release" id="unreleased">
 
-## Unreleased (2026-07-30)
+## Unreleased (2026-08-01)
 
 <section class="features">
 
@@ -22,6 +22,7 @@
 
 <details>
 
+-   [`8c49b29`](https://github.com/stdlib-js/stdlib/commit/8c49b2968db52866bb550ee1cfde60567c60eca9) - **docs:** update examples [(#13846)](https://github.com/stdlib-js/stdlib/pull/13846) _(by Karan Anand)_
 -   [`49ae61d`](https://github.com/stdlib-js/stdlib/commit/49ae61d06166c2b205d9900f75e8c3ae4fc7d33e) - **feat:** add `blas/ext/base/swxmy` [(#13713)](https://github.com/stdlib-js/stdlib/pull/13713) _(by Karan Anand)_
 
 </details>
