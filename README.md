@@ -53,32 +53,38 @@ where `⊙` denotes the [Hadamard product][hadamard-product].
 
 <!-- /.intro -->
 
-<section class="installation">
 
-## Installation
-
-```bash
-npm install @stdlib/blas-ext-base-swxmy
-```
-
-Alternatively,
-
--   To load the package in a website via a `script` tag without installation and bundlers, use the [ES Module][es-module] available on the [`esm`][esm-url] branch (see [README][esm-readme]).
--   If you are using Deno, visit the [`deno`][deno-url] branch (see [README][deno-readme] for usage intructions).
--   For use in Observable, or in browser/node environments, use the [Universal Module Definition (UMD)][umd] build available on the [`umd`][umd-url] branch (see [README][umd-readme]).
-
-The [branches.md][branches-url] file summarizes the available branches and displays a diagram illustrating their relationships.
-
-To view installation and usage instructions specific to each branch build, be sure to explicitly navigate to the respective README files on each branch, as linked to above.
-
-</section>
 
 <section class="usage">
 
 ## Usage
 
+To use in Observable,
+
 ```javascript
-var swxmy = require( '@stdlib/blas-ext-base-swxmy' );
+swxmy = require( 'https://cdn.jsdelivr.net/gh/stdlib-js/blas-ext-base-swxmy@umd/browser.js' )
+```
+
+To vendor stdlib functionality and avoid installing dependency trees for Node.js, you can use the UMD server build:
+
+```javascript
+var swxmy = require( 'path/to/vendor/umd/blas-ext-base-swxmy/index.js' )
+```
+
+To include the bundle in a webpage,
+
+```html
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/blas-ext-base-swxmy@umd/browser.js"></script>
+```
+
+If no recognized module system is present, access bundle contents via the global scope:
+
+```html
+<script type="text/javascript">
+(function () {
+    window.swxmy;
+})();
+</script>
 ```
 
 #### swxmy( N, x, strideX, y, strideY, w, strideW )
@@ -196,10 +202,15 @@ swxmy.ndarray( 3, x, 1, x.length-3, y, 1, y.length-3, w, 1, w.length-3 );
 
 <!-- eslint no-undef: "error" -->
 
-```javascript
-var discreteUniform = require( '@stdlib/random-array-discrete-uniform' );
-var logEach = require( '@stdlib/console-log-each' );
-var swxmy = require( '@stdlib/blas-ext-base-swxmy' );
+```html
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/random-array-discrete-uniform@umd/browser.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/console-log-each@umd/browser.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/blas-ext-base-swxmy@umd/browser.js"></script>
+<script type="text/javascript">
+(function () {
 
 var opts = {
     'dtype': 'float32'
@@ -210,6 +221,11 @@ var w = discreteUniform( 10, -100, 100, opts );
 
 swxmy( x.length, x, 1, y, 1, w, 1 );
 logEach( '%d * %d = %d', x, y, w );
+
+})();
+</script>
+</body>
+</html>
 ```
 
 </section>
@@ -218,142 +234,7 @@ logEach( '%d * %d = %d', x, y, w );
 
 <!-- C interface documentation. -->
 
-* * *
 
-<section class="c">
-
-## C APIs
-
-<!-- Section to include introductory text. Make sure to keep an empty line after the intro `section` element and another before the `/section` close. -->
-
-<section class="intro">
-
-</section>
-
-<!-- /.intro -->
-
-<!-- C usage documentation. -->
-
-<section class="usage">
-
-### Usage
-
-```c
-#include "stdlib/blas/ext/base/swxmy.h"
-```
-
-#### stdlib_strided_swxmy( N, \*X, strideX, \*Y, strideY, \*W, strideW )
-
-Multiplies elements of a single-precision floating-point strided array `X` by the corresponding elements of a single-precision floating-point strided array `Y` and assigns the results to elements in a single-precision floating-point strided array `W`.
-
-```c
-const float x[] = { 1.0f, 2.0f, 3.0f, 4.0f };
-const float y[] = { 2.0f, 3.0f, 4.0f, 5.0f };
-float w[] = { 0.0f, 0.0f, 0.0f, 0.0f };
-
-stdlib_strided_swxmy( 4, x, 1, y, 1, w, 1 );
-```
-
-The function accepts the following arguments:
-
--   **N**: `[in] CBLAS_INT` number of indexed elements.
--   **X**: `[in] float*` first input array.
--   **strideX**: `[in] CBLAS_INT` stride length for `X`.
--   **Y**: `[in] float*` second input array.
--   **strideY**: `[in] CBLAS_INT` stride length for `Y`.
--   **W**: `[out] float*` output array.
--   **strideW**: `[in] CBLAS_INT` stride length for `W`.
-
-```c
-void stdlib_strided_swxmy( const CBLAS_INT N, const float *X, const CBLAS_INT strideX, const float *Y, const CBLAS_INT strideY, float *W, const CBLAS_INT strideW );
-```
-
-<!-- lint disable maximum-heading-length -->
-
-#### stdlib_strided_swxmy_ndarray( N, \*X, strideX, offsetX, \*Y, strideY, offsetY, \*W, strideW, offsetW )
-
-<!-- lint enable maximum-heading-length -->
-
-Multiplies elements of a single-precision floating-point strided array `X` by the corresponding elements of a single-precision floating-point strided array `Y` and assigns the results to elements in a single-precision floating-point strided array `W` using alternative indexing semantics.
-
-```c
-const float x[] = { 1.0f, 2.0f, 3.0f, 4.0f };
-const float y[] = { 2.0f, 3.0f, 4.0f, 5.0f };
-float w[] = { 0.0f, 0.0f, 0.0f, 0.0f };
-
-stdlib_strided_swxmy_ndarray( 4, x, 1, 0, y, 1, 0, w, 1, 0 );
-```
-
-The function accepts the following arguments:
-
--   **N**: `[in] CBLAS_INT` number of indexed elements.
--   **X**: `[in] float*` first input array.
--   **strideX**: `[in] CBLAS_INT` stride length for `X`.
--   **offsetX**: `[in] CBLAS_INT` starting index for `X`.
--   **Y**: `[in] float*` second input array.
--   **strideY**: `[in] CBLAS_INT` stride length for `Y`.
--   **offsetY**: `[in] CBLAS_INT` starting index for `Y`.
--   **W**: `[out] float*` output array.
--   **strideW**: `[in] CBLAS_INT` stride length for `W`.
--   **offsetW**: `[in] CBLAS_INT` starting index for `W`.
-
-```c
-void stdlib_strided_swxmy_ndarray( const CBLAS_INT N, const float *X, const CBLAS_INT strideX, const CBLAS_INT offsetX, const float *Y, const CBLAS_INT strideY, const CBLAS_INT offsetY, float *W, const CBLAS_INT strideW, const CBLAS_INT offsetW );
-```
-
-</section>
-
-<!-- /.usage -->
-
-<!-- C API usage notes. Make sure to keep an empty line after the `section` element and another before the `/section` close. -->
-
-<section class="notes">
-
-</section>
-
-<!-- /.notes -->
-
-<!-- C API usage examples. -->
-
-<section class="examples">
-
-### Examples
-
-```c
-#include "stdlib/blas/ext/base/swxmy.h"
-#include <stdio.h>
-
-int main( void ) {
-    // Create strided arrays:
-    const float x[] = { 1.0f, -2.0f, 3.0f, -4.0f, 5.0f, -6.0f, 7.0f, -8.0f };
-    const float y[] = { 2.0f, 3.0f, -1.0f, 4.0f, -2.0f, 5.0f, -3.0f, 6.0f };
-    float w[] = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
-
-    // Specify the number of indexed elements:
-    const int N = 8;
-
-    // Specify strides:
-    const int strideX = 1;
-    const int strideY = 1;
-    const int strideW = 1;
-
-    // Multiply elements of `x` by the corresponding elements of `y` and assign the results to elements in `w`:
-    stdlib_strided_swxmy( N, x, strideX, y, strideY, w, strideW );
-
-    // Print the result:
-    for ( int i = 0; i < 8; i++ ) {
-        printf( "w[ %i ] = %f\n", i, w[ i ] );
-    }
-}
-```
-
-</section>
-
-<!-- /.examples -->
-
-</section>
-
-<!-- /.c -->
 
 <!-- Section for related `stdlib` packages. Do not manually edit this section, as it is automatically populated. -->
 
@@ -435,7 +316,7 @@ Copyright &copy; 2016-2026. The Stdlib [Authors][stdlib-authors].
 
 [stdlib-license]: https://raw.githubusercontent.com/stdlib-js/blas-ext-base-swxmy/main/LICENSE
 
-[@stdlib/array/float32]: https://github.com/stdlib-js/array-float32
+[@stdlib/array/float32]: https://github.com/stdlib-js/array-float32/tree/umd
 
 [hadamard-product]: https://en.wikipedia.org/wiki/Hadamard_product_(matrices)
 
